@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "goal": "Template for a dedicated test form. Replace IDs with those observed in its UIA tree.",
+  "steps": [
+    {
+      "id": "fill-title",
+      "op": "set_value",
+      "selector": { "automationId": "test-title", "role": "Edit" },
+      "value": "Test document",
+      "skipIf": { "selector": { "automationId": "test-title" }, "value": "Test document" },
+      "expect": { "selector": { "automationId": "test-title" }, "value": "Test document" }
+    },
+    {
+      "id": "save",
+      "op": "invoke",
+      "selector": { "automationId": "test-save", "role": "Button" },
+      "before": { "selector": { "automationId": "test-title" }, "value": "Test document" },
+      "expect": { "selector": { "automationId": "test-status" }, "value": "Saved" },
+      "timeoutMs": 5000
+    }
+  ]
+}

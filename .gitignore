@@ -1,0 +1,8 @@
+/bin/
+/reports/
+/local/
+*.jsonl
+/node_modules/
+/.env
+/.env.*
+*.session

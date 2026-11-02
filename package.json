@@ -1,0 +1,25 @@
+{
+  "name": "windows-executor",
+  "version": "0.4.0-alpha.1",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "check": "node scripts/check.mjs",
+    "build": "node scripts/build.mjs",
+    "windows": "node src/cli.mjs windows",
+    "selftest": "node src/cli.mjs selftest",
+    "mcp": "node src/mcp.mjs",
+    "jobs": "node src/job-cli.mjs",
+    "connectors": "node src/connector-cli.mjs",
+    "fast": "node src/fast-cli.mjs",
+    "architecture": "node scripts/architecture.mjs",
+    "verify": "npm run check && npm run architecture && node scripts/check-budget.mjs && node scripts/check-metrika.mjs"
+  },
+  "dependencies": {
+    "ajv": "8.20.0"
+  },
+  "license": "MIT-0"
+}
