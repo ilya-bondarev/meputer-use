@@ -52,7 +52,9 @@ node scripts/install-skill.mjs
 
 The destination uses `CODEX_HOME`, or `.codex` under your home directory.
 Installing the skill is optional; MCP and CLI do not depend on it.
-Read the installer before replacing an existing skill with the same name.
+The installer preserves an existing skill. To replace it deliberately, run the
+same command with `--force`. The active installation's skill is not changed by
+cloning or building this project.
 
 ## Optional verification hook
 
@@ -70,8 +72,11 @@ so keep an existing custom value if you need to restore it later.
 powershell -NoProfile -File scripts/install-supervisor.ps1
 ```
 
-This installs a per-user Task Scheduler entry and starts the supervisor. It can
-resume saved nonterminal jobs under this clone's `local/jobs/`. Install it only
+This installs a per-user Task Scheduler entry and starts the supervisor. It uses
+the name `WindowsExecutorSupervisor`; the installer rejects a task with that
+name belonging to a different clone. The old private installation's task name
+is not replaced. The supervisor can resume saved nonterminal jobs under this
+clone's `local/jobs/`. Install it only
 when you want jobs to survive chat exit and restart after sign-in. An active
 interactive Windows session is still required for UI operations.
 

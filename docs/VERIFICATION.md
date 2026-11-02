@@ -2,8 +2,11 @@
 
 `npm run verify` checks JavaScript syntax, domain boundaries, preservation of an
 uncertain Decisions budget reservation, and the Metrika origin/counter boundary.
+It also checks skill overwrite protection and public source distribution rules.
 It does not send paid requests or control the desktop. CI additionally compiles
-the C# bridge on a Windows runner.
+the C# bridge on a Windows runner and scans Git history with a pinned Gitleaks
+build. Public source checks require a Git checkout; archive users can build and
+run the executor without those Git-specific checks.
 
 Previous real-desktop checks used Windows 10 x64, ordinary Firefox, and Telegram
 Desktop. They exercised browser text reading, native input, local credential

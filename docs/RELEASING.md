@@ -6,8 +6,11 @@
 2. Verify a fresh clone: `npm ci`, `npm run build`, `npm run verify`, and
    `node src/cli.mjs selftest`. The self-test queries native capabilities without
    activating or controlling any window. Test another Windows environment in CI.
-3. Run secret scanning on the candidate Git history and on the source archive.
-   Use a redacted report. If a real secret is found, keep the candidate private
+3. Run `npm run secrets` on the candidate Git history and staged source. This
+   downloads a pinned, SHA-256-verified Gitleaks build into the local user cache;
+   it is a development tool, not an application dependency. For an extracted
+   source archive, pass its path to `scripts/scan-secrets.ps1 -Source PATH`.
+   Output is redacted. If a real secret is found, keep the candidate private
    and rotate that secret as appropriate; removing a file is not revocation.
 4. Ensure the Windows verification and secret checks pass on the exact commit
    to be released. Keep GitHub Actions permissions read-only for verification.

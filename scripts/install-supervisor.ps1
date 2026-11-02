@@ -1,16 +1,27 @@
 param([switch]$Remove)
 $ErrorActionPreference = 'Stop'
-$taskName = 'MeSystemWindowsExecutorSupervisor'
+$taskName = 'WindowsExecutorSupervisor'
+$executorRoot = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot '..')).Path
+$expectedArguments = '"' + (Join-Path $executorRoot 'src\supervisor.mjs') + '"'
 $schedule = New-Object -ComObject Schedule.Service
 $schedule.Connect()
 $taskFolder = $schedule.GetFolder('\')
+$existing = $null
+try { $existing = $taskFolder.GetTask($taskName) }
+catch { if ($_.Exception.HResult -ne -2147024894) { throw } }
+if ($null -ne $existing) {
+    $actions = $existing.Definition.Actions
+    if ($actions.Count -ne 1 -or $actions.Item(1).Arguments -ne $expectedArguments -or $actions.Item(1).WorkingDirectory -ne $executorRoot) {
+        throw 'This scheduled-task name belongs to another installation. Manage it from that installation first.'
+    }
+}
 if ($Remove) {
-    try { $taskFolder.GetTask($taskName).Stop(0) } catch {}
+    if ($null -eq $existing) { Write-Output 'Supervisor scheduled task is not installed.'; exit }
+    if ($existing.State -eq 4) { $existing.Stop(0) }
     $taskFolder.DeleteTask($taskName,0)
     Write-Output 'Supervisor scheduled task removed. Jobs and results were preserved.'
     exit
 }
-$executorRoot = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot '..')).Path
 $nodePath = (Get-Command node.exe).Source
 $task = $schedule.NewTask(0)
 $task.RegistrationInfo.Description = 'Resume saved Windows Executor jobs in the current user interactive session. Idle without jobs.'
@@ -31,7 +42,7 @@ $trigger.UserId = $task.Principal.UserId
 $trigger.Delay = 'PT30S'
 $action = $task.Actions.Create(0)
 $action.Path = $nodePath
-$action.Arguments = '"' + (Join-Path $executorRoot 'src\supervisor.mjs') + '"'
+$action.Arguments = $expectedArguments
 $action.WorkingDirectory = $executorRoot
 $registered = $taskFolder.RegisterTaskDefinition($taskName,$task,6,$task.Principal.UserId,$null,3)
 $null = $registered.Run($null)

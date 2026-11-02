@@ -16,7 +16,8 @@
     "connectors": "node src/connector-cli.mjs",
     "fast": "node src/fast-cli.mjs",
     "architecture": "node scripts/architecture.mjs",
-    "verify": "npm run check && npm run architecture && node scripts/check-budget.mjs && node scripts/check-metrika.mjs"
+    "verify": "npm run check && npm run architecture && node scripts/check-budget.mjs && node scripts/check-metrika.mjs && node scripts/check-installation.mjs && node scripts/check-public.mjs",
+    "secrets": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/scan-secrets.ps1"
   },
   "dependencies": {
     "ajv": "8.20.0"
