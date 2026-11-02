@@ -1,0 +1,15 @@
+/bin/
+/reports/
+/local/
+*.jsonl
+/node_modules/
+/.env
+/.env.*
+*.session
+/dist/
+*.pem
+*.p12
+*.pfx
+*.sqlite
+*.sqlite-wal
+*.sqlite-shm

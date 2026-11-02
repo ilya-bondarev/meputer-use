@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "goal": "Wait one minute, then wait for an explicitly chosen receipt file",
+  "allowedProcesses": [],
+  "nodes": [
+    {"id":"delay","type":"sleep","durationMs":60000},
+    {"id":"receipt","type":"wait","when":{"file":"C:\\Temp\\windows-executor-receipt.txt","minBytes":1},"pollMs":1000,"timeoutMs":3600000},
+    {"id":"done","type":"finish"}
+  ]
+}

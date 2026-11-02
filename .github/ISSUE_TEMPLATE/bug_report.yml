@@ -1,0 +1,23 @@
+name: Bug report
+description: Report a reproducible executor problem without private data.
+body:
+  - type: textarea
+    id: versions
+    attributes:
+      label: Environment
+      description: Executor version, Windows version, Node version, application version and UI language.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Minimal reproduction
+      description: Include a sanitized request and error code. Do not attach keys, browser profiles, job journals or confidential screenshots.
+    validations:
+      required: true
+  - type: textarea
+    id: result
+    attributes:
+      label: Expected and observed behavior
+    validations:
+      required: true

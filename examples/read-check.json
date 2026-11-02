@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "goal": "Check for the observed Explorer search field without input",
+  "observe": {
+    "scope": { "automationId": "SearchEditBox" },
+    "budgetMs": 5000,
+    "maxElements": 50,
+    "maxDepth": 5
+  },
+  "steps": [
+    {
+      "id": "search-field-exists",
+      "op": "assert",
+      "expect": {
+        "selector": { "role": "Edit", "automationId": "SearchEditBox" },
+        "exists": true
+      }
+    }
+  ]
+}
